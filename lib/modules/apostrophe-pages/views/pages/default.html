@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block beforeMain %}
+<header class="navigation">
+  <div class="nav-container">
+    <div class="brand">
+      <a href="{{ data.home._url }}">
+        <img class="bpc-logo" src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Fist.svg"></a><h2><a href="{{ data.home._url }}">BPC</a></h2>
+    </div>
+    <nav>
+      <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+      <ul class="nav-list">
+        {% for tab in data.home._children %}
+           <li><a href="{{ tab._url }}">{{ tab.title }}</a></li><!-- Getting rid of that annoying space at desktop size -->
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>
+{% endblock %}
+{% block main %}
+  <div class="main-content">
+    <h3>{{ data.page.title }}
+    </h3>
+    {{ apos.area(data.page, 'body', {
+      widgets: {
+        'apostrophe-images': {
+          size: 'full'
+        },
+        'apostrophe-rich-text': {
+          toolbar: [ 'Styles', 'Bold', 'Italic', 'Link', 'Unlink' ],
+          styles: [
+            { name: 'Heading', element: 'h3' },
+            { name: 'Subheading', element: 'h4' },
+            { name: 'Paragraph', element: 'p' }
+          ]
+        }
+      }
+    }) }}
+    {# Load More button. Also outside data-apos-ajax-append, so it gets refreshed #}
+{% if data.currentPage < data.totalPages %}
+  {# "Load More" button with the "append=1" flag #}
+  <a data-apos-ajax-infinite-scroll href="{{ data.url }} | build({ page: data.currentPage + 1, append: 1 })">Load More...</a>
+{% endif %}
+  </div>
+{% endblock %}

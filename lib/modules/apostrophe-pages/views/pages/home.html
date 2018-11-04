@@ -1,0 +1,15 @@
+{#
+  This is an example home page template. It inherits and extends a layout template
+  that lives in the top-level views/ folder for convenience
+#}
+
+{% extends "layout.html" %}
+
+{% block main %}
+  <div class="main-content">
+    <img class="bpc-home-hero" src="/images/BPC-logo-large.jpg">
+    {% for tab in data.home._children %}
+       <li><a href="{{ tab._url }}">{{ tab.title }}</a></li><!-- Getting rid of that annoying space at desktop size -->
+    {% endfor %}
+    </div>
+{% endblock %}
